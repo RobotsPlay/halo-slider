@@ -1,25 +1,84 @@
 import "./style.css";
 
-const sliderEl = document.querySelector(".halo-slider");
-const radius = sliderEl ? sliderEl.clientWidth / 2 : 0;
-const slides = document.querySelectorAll<HTMLElement>(".halo-slide");
+class HaloSlider {
+  sliderEl: HTMLElement | null = null;
+  radius: number = 0;
+  slides: HTMLElement[] = [];
+  offset: number = 0;
+  currentRotation: number = 0;
 
-const offset = getOffsetDegrees(slides.length);
+  constructor(selector: string) {
+    this.sliderEl = document.querySelector(selector);
 
-slides.forEach((slide, index) => {
-  const [xpos, ypos] = getCirclePosition(index);
-  slide.style.setProperty("--xpos", `${xpos}px`);
-  slide.style.setProperty("--ypos", `${ypos}px`);
-});
+    if (!this.sliderEl) {
+      throw new Error("Element not found");
+    }
 
-function getOffsetDegrees(count: number) {
-  return 360 / count;
+    this.radius = this.sliderEl ? this.sliderEl.clientWidth / 2 : 0;
+    this.slides = [...document.querySelectorAll<HTMLElement>(".halo-slide")];
+
+    this.createSlides();
+  }
+
+  createSlides() {
+    const slideEls = document.querySelectorAll<HTMLElement>(".halo-slide");
+    this.offset = this.getOffsetDegrees(slideEls.length);
+
+    slideEls.forEach((slideEl, index) => {
+      const [xpos, ypos] = this.getCirclePosition(index);
+      slideEl.style.setProperty("--xpos", `${xpos}px`);
+      slideEl.style.setProperty("--ypos", `${ypos}px`);
+      slideEl.addEventListener("click", (e) => {
+        this.onClickSlide(e);
+      });
+      this.slides.push(slideEl);
+    });
+  }
+
+  getOffsetDegrees(count: number) {
+    return 360 / count;
+  }
+
+  getCirclePosition(index: number) {
+    const degree = index * this.offset;
+    const y = this.radius * Math.cos((Math.PI * 2 * degree) / 360);
+    const x = this.radius * Math.sin((Math.PI * 2 * degree) / 360);
+
+    return [x, y];
+  }
+
+  getSlideIndex(slideEl: HTMLElement) {
+    return this.slides.indexOf(slideEl);
+  }
+
+  onClickSlide(e: MouseEvent) {
+    const slideEl = e?.target as HTMLElement;
+    if (!slideEl) return;
+
+    const index = this.getSlideIndex(slideEl);
+    const degree = index * this.offset;
+
+    this.rotateSlider(degree);
+  }
+
+  rotateSlider(degree: number) {
+    this.currentRotation = degree;
+
+    this.sliderEl?.style.setProperty(
+      "--rotation",
+      `${this.currentRotation}deg`,
+    );
+    this.alignSlides();
+  }
+
+  alignSlides() {
+    this.slides.forEach((slideEl) => {
+      slideEl?.style.setProperty(
+        "--rotation",
+        `${0 - this.currentRotation}deg`,
+      );
+    });
+  }
 }
 
-function getCirclePosition(index: number) {
-  const degree = index * offset;
-  const y = radius * Math.cos((Math.PI * 2 * degree) / 360);
-  const x = radius * Math.sin((Math.PI * 2 * degree) / 360);
-
-  return [x, y];
-}
+new HaloSlider(".halo-slider");

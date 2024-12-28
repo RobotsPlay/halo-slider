@@ -8,6 +8,10 @@ class HaloSlider {
   currentRotation: number = 0;
   currentSlideIndex: number = 0;
 
+  /**
+   * Creates an instance of HaloSlider.
+   * @param {string} selector - The CSS selector for the slider element.
+   */
   constructor(selector: string) {
     this.sliderEl = document.querySelector(selector);
 
@@ -29,6 +33,9 @@ class HaloSlider {
     prevBtn?.addEventListener("click", this.onClickPrev.bind(this));
   }
 
+  /**
+   * Creates the slides and positions them in a circular layout.
+   */
   createSlides() {
     this.offset = this.getOffsetDegrees(this.slides.length);
 
@@ -40,10 +47,20 @@ class HaloSlider {
     });
   }
 
+  /**
+   * Calculates the offset degrees based on the number of slides.
+   * @param {number} count - The number of slides.
+   * @returns {number} The offset degrees.
+   */
   getOffsetDegrees(count: number) {
     return 360 / count;
   }
 
+  /**
+   * Calculates the position of a slide in the circular layout.
+   * @param {number} index - The index of the slide.
+   * @returns {[number, number]} The x and y positions of the slide.
+   */
   getCirclePosition(index: number) {
     const degree = index * this.offset;
     const y = this.radius * Math.cos((Math.PI * 2 * degree) / 360);
@@ -52,10 +69,19 @@ class HaloSlider {
     return [x, y];
   }
 
+  /**
+   * Gets the index of a slide element.
+   * @param {HTMLElement} slideEl - The slide element.
+   * @returns {number} The index of the slide element.
+   */
   getSlideIndex(slideEl: HTMLElement) {
     return this.slides.indexOf(slideEl);
   }
 
+  /**
+   * Handles the click event on a slide.
+   * @param {Event} e - The click event.
+   */
   onClickSlide(e: Event) {
     const slideEl = e?.target as HTMLElement;
     if (!slideEl) return;
@@ -65,6 +91,10 @@ class HaloSlider {
     this.rotateSlider(newIndex);
   }
 
+  /**
+   * Handles the click event on the next button.
+   * @param {Event} e - The click event.
+   */
   onClickNext(e: Event) {
     e?.preventDefault();
     let index = this.currentSlideIndex + 1;
@@ -72,6 +102,10 @@ class HaloSlider {
     this.rotateSlider(index);
   }
 
+  /**
+   * Handles the click event on the previous button.
+   * @param {Event} e - The click event.
+   */
   onClickPrev(e: Event) {
     e?.preventDefault();
     let index = this.currentSlideIndex - 1;
@@ -79,6 +113,10 @@ class HaloSlider {
     this.rotateSlider(index);
   }
 
+  /**
+   * Rotates the slider to the specified slide index.
+   * @param {number} newIndex - The new slide index.
+   */
   rotateSlider(newIndex: number) {
     let indexOffset = newIndex - this.currentSlideIndex;
     indexOffset =
@@ -98,6 +136,9 @@ class HaloSlider {
     this.alignSlides();
   }
 
+  /**
+   * Aligns the slides to match the current rotation.
+   */
   alignSlides() {
     this.slides.forEach((slideEl) => {
       slideEl?.style.setProperty(

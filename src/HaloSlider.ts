@@ -47,6 +47,7 @@ class HaloSlider {
   currentSlideIndex: number = 0;
   lastTick: number = 0;
   currentAngle: number = 0;
+  resizeObserver: ResizeObserver | null = null;
 
   /**
    * Creates an instance of HaloSlider.
@@ -71,6 +72,26 @@ class HaloSlider {
 
     nextBtn?.addEventListener("click", this.onClickNext.bind(this));
     prevBtn?.addEventListener("click", this.onClickPrev.bind(this));
+
+    this.setupResizeObserver();
+  }
+
+  setupResizeObserver() {
+    if (this.ringEl) {
+      this.resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          this.radiusX = entry.contentRect.width / 2;
+          this.radiusY = entry.contentRect.height / 2;
+          this.slides.forEach((slide) => {
+            const [xpos, ypos] = this.getCirclePosition(slide.currentAngle);
+            slide.updatePosition(xpos, ypos, slide.currentAngle);
+            slide.updateScale(this.radiusY);
+          });
+        }
+      });
+
+      this.resizeObserver.observe(this.ringEl);
+    }
   }
 
   /**

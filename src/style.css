@@ -1,16 +1,28 @@
 * {
   box-sizing: border-box;
 }
+p {
+  margin: 0.5em 0;
+}
 
-body {
-  margin: 0;
-  padding: 30px;
+.container {
+  margin: 0 auto;
+  padding: 60px 90px;
+  max-width: 100%;
+  width: 1200px;
   overflow: hidden;
+}
+
+@media (max-width: 1260px) {
+  .container {
+    width: 100%;
+  }
 }
 
 .halo-slider--ring {
   width: 100%;
-  height: 30vw;
+  height: 12vw;
+  max-height: 200px;
   margin: auto;
   position: relative;
 }
@@ -19,6 +31,8 @@ body {
   position: absolute;
   top: var(--ypos, 0);
   left: var(--xpos, 0);
+  transform: translate(-50%, -50%) scale(var(--scale, 1));
+  z-index: var(--z, 1);
   width: 60px;
   height: 60px;
   background-color: #333;
@@ -29,5 +43,89 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translate(-50%, -50%) scale(var(--scale, 1));
+}
+
+.halo-slider--controls {
+  z-index: 2;
+  position: relative;
+  margin-top: 6vw;
+  text-align: center;
+}
+
+.halo-slider--info-boxes {
+  position: relative;
+}
+
+.halo-slider--info-box {
+  max-width: 650px;
+  margin: 0 auto;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 32px;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.halo-slider--info-box-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.halo-slider--info-box.is-active {
+  opacity: 1;
+  position: static;
+}
+
+.halo-slider--prev,
+.halo-slider--next {
+  font-family: "Quicksand", sans-serif;
+  background: none;
+  border: none;
+  font-size: 64px;
+  font-weight: 700;
+  color: #333;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.halo-slider--prev {
+  transform: scaleX(-100%);
+}
+
+@media (max-width: 1260px) {
+  .container {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .halo-slider--ring {
+    width: calc(100% - 60px);
+  }
+
+  .halo-slider--controls {
+    padding: 20vw 30px 0;
+  }
+
+  .halo-slider--slide {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .halo-slider--slide.is-active {
+    opacity: 1;
+  }
+
+  .halo-slider--info-box {
+    font-size: 20px;
+  }
+
+  .halo-slider--info-box-title {
+    font-size: 32px;
+  }
 }

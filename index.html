@@ -7,13 +7,71 @@
     <title>Halo Slider</title>
   </head>
   <body>
-    <div class="halo-slider">
-      <div class="halo-slide"></div>
-      <div class="halo-slide"></div>
-      <div class="halo-slide"></div>
-      <div class="halo-slide"></div>
-      <div class="halo-slide"></div>
-      <div class="halo-slide"></div>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <div class="container">
+      <div class="halo-slider ring">
+        <div id="ring" class="halo-slider--ring">
+          <div class="halo-slider--slide">1</div>
+          <div class="halo-slider--slide">2</div>
+          <div class="halo-slider--slide">3</div>
+          <div class="halo-slider--slide">4</div>
+          <div class="halo-slider--slide">5</div>
+          <div class="halo-slider--slide">6</div>
+        </div>
+
+        <div class="halo-slider--controls">
+          <div class="halo-slider--buttons">
+            <button class="halo-slider--prev">➙</button>
+            <button class="halo-slider--next">➙</button>
+          </div>
+
+          <div class="halo-slider--info-boxes mt-24">
+            <div class="halo-slider--info-box">
+              <div class="halo-slider--info-box-title">Slide 1</div>
+              <p>
+                The big, fuzzy bear waved hello as he walked through the forest.
+              </p>
+            </div>
+
+            <div class="halo-slider--info-box">
+              <div class="halo-slider--info-box-title">Slide 2</div>
+              <p>
+                The little bird sang a sweet song while flying high in the sky.
+              </p>
+            </div>
+
+            <div class="halo-slider--info-box">
+              <div class="halo-slider--info-box-title">Slide 3</div>
+              <p>Sophie filled her cup with warm, chocolaty milk and smiled.</p>
+            </div>
+
+            <div class="halo-slider--info-box">
+              <div class="halo-slider--info-box-title">Slide 4</div>
+              <p>The happy dog wagged its tail, ready for a game of fetch.</p>
+            </div>
+
+            <div class="halo-slider--info-box">
+              <div class="halo-slider--info-box-title">Slide 5</div>
+              <p>
+                The bright sun peeked over the hill, making the flowers dance in
+                the morning light.
+              </p>
+            </div>
+
+            <div class="halo-slider--info-box">
+              <div class="halo-slider--info-box-title">Slide 6</div>
+              <p>
+                At night, the moon glowed softly, lighting up the path for the
+                sleepy owl.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
